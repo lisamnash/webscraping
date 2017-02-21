@@ -14,6 +14,7 @@ if __name__ == '__main__':
 
     if os.path.exists(path_to_data):
         old_data = list(pd.read_csv(path_to_data).drop(['time', 'title'], axis=1).url.values)
+
     else:
         old_data = []
 
@@ -28,16 +29,17 @@ if __name__ == '__main__':
     titles = featured.find_all('a', {'class': 'thumbnail-url'})
 
     urls = []
+    new = 0
     for title in titles:
         url = Bb_url + title['href']
         title = title.get_text()
         title = ''.join((c for c in title if ord(c) < 128))
-
         if url not in old_data:
             urls.append([now, title, url])
+            new+=1
 
     print 'saving...'
-
+    print 'new ,' , new
     df = pd.DataFrame(data=urls, columns=['time', 'title', 'url'])
 
     if not os.path.exists(path_to_data):

@@ -26,25 +26,45 @@ if __name__ == '__main__':
     soup = BeautifulSoup(html, "lxml")
 
     featured = soup.find_all('a', {'class': 'primary'}, href=True)
+
     urls = []
+    new = 0
     for feature in featured:
         try:
+
             data_track = feature['data-track']
             article_info = re.findall(r"[\w']+", data_track)
+
             if 'TopShelf' or 'Cabinet' in article_info:
                 url = feature['href']
 
-                print url
                 title = feature['data-vr-excerpttitle']
                 title = ''.join((c for c in title if ord(c) < 128))
                 url = ''.join((c for c in url if ord(c) < 128))
 
                 if url not in old_data:
                     urls.append([now, title, url])
+                    new += 1
         except:
-            a = 1
-    print 'saving...'
+            for sub in feature:
+                try:
+                    data_track = sub['data-track']
+                    article_info = re.findall(r"[\w']+", data_track)
 
+                    if 'TopShelf' or 'Cabinet' in article_info:
+                        url = feature['href']
+
+                        title = sub['data-vr-excerpttitle']
+                        title = ''.join((c for c in title if ord(c) < 128))
+                        url = ''.join((c for c in url if ord(c) < 128))
+
+                        if url not in old_data:
+                            urls.append([now, title, url])
+                            new += 1
+                except:
+                    a=1
+    print 'saving...'
+    print 'number of new urls , ', new
     df = pd.DataFrame(data=urls, columns=['time', 'title', 'url'])
 
     if not os.path.exists(path_to_data):
