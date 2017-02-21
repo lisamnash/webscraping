@@ -1,5 +1,5 @@
-# Webscraping of Breitbart (and maybe other conservative/liberal outlets later)
+# Webscraping of Breitbart and Slate
 
-I'm scraping Breitbart for featured article urls ('article_urls.py'). 'breitbart_scrape.py' takes breitbart urls as inputs and will save the article title and article text.
+This is a not super creative first try at webscraping and language processing.  I plan to scrape the top articles on slate (liberal) and Breitbart (conservative) and see if I can find measureable differences between them.  I know pretty much nothing about NLP at this point, so this should be fun I guess.
 
-The plan is to do some kind of analysis on this stuff later (Natural Language Processing?) 
+Note: not comparing the legitimacy of these two sources at all.  
